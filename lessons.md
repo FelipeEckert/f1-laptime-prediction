@@ -22,4 +22,4 @@ Last updated: May 2026
 - GrandPrix column added manually as race label for grouping in EDA
 
 ## Issues encountered
-(add issues and solutions here as the project evolves)
+- **FastF1 weather columns not in laps DataFrame:** `AirTemp`, `TrackTemp`, `Humidity`, `WindSpeed` are not part of `session.laps` — they live in `session.weather_data` and require a time-based merge. Removed from `KEEP_COLS` in notebook 01. Will be merged in feature engineering step (notebook 03).
