@@ -6,7 +6,7 @@ Last updated: May 2026
 [✅] Project setup — venv, requirements.txt, folder structure
 [✅] notebook 01 — data collection via FastF1 (5 races, 2023 season)
 [ ] Run notebook 01 and confirm laps_2023.csv is saved correctly
-[ ] notebook 02 — EDA (exploratory data analysis)
+[→] notebook 02 — EDA (exploratory data analysis)
 [ ] notebook 03 — ML pipeline (Linear Regression → Random Forest → XGBoost → SHAP)
 [ ] src/data_loader.py — extract reusable loading functions from notebook 01
 [ ] src/features.py — feature engineering functions
@@ -27,6 +27,7 @@ Last updated: May 2026
 ## notebook 03 — ML pipeline (planned)
 - Feature encoding (Compound, Driver, Team → label or one-hot)
 - Train/test split (by race — avoid data leakage)
+- Handle compound imbalance with stratified train/test split
 - Model 1: Linear Regression (baseline)
 - Model 2: Random Forest
 - Model 3: XGBoost (main)
@@ -40,6 +41,7 @@ Last updated: May 2026
 - Sector time breakdown (S1, S2, S3 as targets)
 - Streamlit dashboard for interactive prediction
 - Deploy on Hugging Face Spaces or Render
+- Interactive lap time histogram by GrandPrix → migrate to Streamlit app
 
 ## Notes for next sessions
 - Always read CLAUDE.md first for full project context

@@ -9,3 +9,4 @@ shap
 jupyter
 seaborn
 ipykernel
+ipywidgets

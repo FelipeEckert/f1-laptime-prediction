@@ -23,3 +23,6 @@ Last updated: May 2026
 
 ## Issues encountered
 - **FastF1 weather columns not in laps DataFrame:** `AirTemp`, `TrackTemp`, `Humidity`, `WindSpeed` are not part of `session.laps` — they live in `session.weather_data` and require a time-based merge. Removed from `KEEP_COLS` in notebook 01. Will be merged in feature engineering step (notebook 03).
+- **Monaco GP is a structural outlier:** Shortest track on the calendar, unique tyre strategy (MEDIUM start → early HARD switch), and naturally faster lap times (~76 s). It distorts compound comparisons and degradation curves when aggregated with other races. Solution: always show per-race breakdown alongside aggregate views.
+- **Compound imbalance:** HARD=2827 laps, MEDIUM=847, SOFT=358. Reflects real race strategy but will affect the ML model. Handle with stratified train/test split in notebook 03.
+- **ipywidgets added for interactive plots** inside Jupyter notebooks. Requires `ipywidgets` installed in the venv (added to requirements.txt). Already bundled with jupyterlab — no separate install needed.
