@@ -14,6 +14,13 @@ Last updated: May 2026
 | weather=True in FastF1 load | Air temp, track temp, humidity, wind speed merged automatically |
 | XGBoost as main model | Handles mixed features (numeric + categorical), robust, industry standard |
 | SHAP for interpretability | Explains predictions — separates this from a black-box model |
+| Compound → ordinal encoding (SOFT=0, MEDIUM=1, HARD=2) | Preserves compound durability order; one-hot would lose this signal |
+| Driver & Team → LabelEncoder | High cardinality; future improvement: replace with qualifying pace as car-normalized baseline |
+| tyre_phase derived feature | TyreLife raw is a weak feature due to warm-up window — tyre_phase encodes where in the lifecycle the lap falls (warm-up / peak / degradation) |
+| fuel_load proxy = (total_laps − LapNumber) / total_laps | Approximates car weight linearly across the race; simple and physics-motivated |
+| Train/test split by race, not randomly | Random split leaks future-race lap times into training; splitting by circuit is a realistic generalization test |
+| Monaco as test set | Most distinct circuit (street track, slowest, unique strategy) — hardest generalization target; keeps 4 diverse circuits in training |
+| XGBoost config: n_estimators=200, learning_rate=0.05 | Slow-and-steady configuration; lower LR + more trees generalizes better than fast LR + fewer trees |
 
 ## Technical notes
 - First FastF1 run downloads ~200–400 MB (cached after that — subsequent runs are instant)
@@ -29,3 +36,5 @@ Last updated: May 2026
 - **Correlation heatmap on raw pooled data is misleading:** track-level variance (e.g. Monaco ~76 s vs Bahrain ~95 s base lap time) dominates all correlations and masks within-race dynamics. TyreLife showed a *negative* correlation with LapTime due to the circuit confound (Monaco = short stints + fast laps) compounded by the fuel burn effect (high TyreLife → lighter car → faster). Fix: z-score normalize LapTime, TyreLife, LapNumber, and Stint within each race before pooling. This removes between-circuit variance entirely so the correlation matrix reflects only within-race dynamics. After normalization, TyreLife is correctly positive (tyre degradation) and LapNumber is correctly negative (fuel burn).
 - **TyreLife and LapNumber correlation is 0.77 (not 1.0):** they only move together within a single stint. After a pit stop, LapNumber continues incrementing but TyreLife resets to zero. They diverge across stints, which explains the sub-1.0 correlation.
 - **TyreLife vs LapTime shows -0.36 (negative) even after normalization:** caused by the tyre warm-up window effect — early stint laps are slow (cold tyres, TyreLife low), then the tyre enters its optimal window and gets faster despite TyreLife increasing. Degradation only appears late in the stint, which this dataset does not capture well because drivers pit before full degradation.
+- **GrandPrix string values must match train/test race lists exactly:** notebook 03 filters by `df['GrandPrix'].isin(train_races)`. If the CSV uses shortened names (e.g. `"Bahrain"` vs `"Bahrain Grand Prix"`), the split will produce empty sets. Always run `df['GrandPrix'].unique()` first to confirm the exact strings.
+- **Driver_enc bundles driver skill with car performance:** LabelEncoder assigns an integer to each driver, so the model conflates Hamilton's pace with the Mercedes car advantage. This is a known limitation. Future fix: use qualifying delta to field average as a car-normalized driver feature.

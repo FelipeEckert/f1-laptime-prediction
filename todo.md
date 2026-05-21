@@ -7,7 +7,7 @@ Last updated: May 2026
 [✅] notebook 01 — data collection via FastF1 (5 races, 2023 season)
 [ ] Run notebook 01 and confirm laps_2023.csv is saved correctly
 [✅] notebook 02 — EDA (exploratory data analysis)
-[ ] notebook 03 — ML pipeline (Linear Regression → Random Forest → XGBoost → SHAP)
+[→] notebook 03 — ML pipeline (Linear Regression → Random Forest → XGBoost → SHAP)
 [ ] src/data_loader.py — extract reusable loading functions from notebook 01
 [ ] src/features.py — feature engineering functions
 [ ] src/evaluate.py — metrics and plot functions
@@ -49,3 +49,9 @@ Last updated: May 2026
 - laps_2023.csv is gitignored — must re-run notebook 01 to regenerate if needed
 - When adding new decisions or issues, update lessons.md
 - When completing a step, check it off in this file
+
+## Checklist before running notebook 03
+- [ ] Re-run notebook 01 to confirm laps_2023.csv exists in data/raw/
+- [ ] Run `df['GrandPrix'].unique()` in section 1 and confirm the strings match the train/test race lists in section 3
+- [ ] Confirm outputs/figures/ folder exists (notebook saves 7 figures there)
+- [ ] After running: fill in actual MAE/RMSE/R² values in lessons.md and update the SHAP interpretation in section 8
