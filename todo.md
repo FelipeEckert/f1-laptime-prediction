@@ -6,7 +6,7 @@ Last updated: May 2026
 [✅] Project setup — venv, requirements.txt, folder structure
 [✅] notebook 01 — data collection via FastF1 (5 races, 2023 season)
 [ ] Run notebook 01 and confirm laps_2023.csv is saved correctly
-[→] notebook 02 — EDA (exploratory data analysis)
+[✅] notebook 02 — EDA (exploratory data analysis)
 [ ] notebook 03 — ML pipeline (Linear Regression → Random Forest → XGBoost → SHAP)
 [ ] src/data_loader.py — extract reusable loading functions from notebook 01
 [ ] src/features.py — feature engineering functions
@@ -28,6 +28,7 @@ Last updated: May 2026
 - Feature encoding (Compound, Driver, Team → label or one-hot)
 - Train/test split (by race — avoid data leakage)
 - Handle compound imbalance with stratified train/test split
+- Create derived tyre features: tyre_phase (warm-up / peak / degradation) based on Compound and TyreLife — TyreLife raw is a weak feature due to warm-up window effect
 - Model 1: Linear Regression (baseline)
 - Model 2: Random Forest
 - Model 3: XGBoost (main)
